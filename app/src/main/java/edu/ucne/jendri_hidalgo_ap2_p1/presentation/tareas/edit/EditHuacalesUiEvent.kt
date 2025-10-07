@@ -1,11 +1,13 @@
 package edu.ucne.jendri_hidalgo_ap2_p1.presentation.tareas.edit
 
-sealed interface EditHuacalesUiEvent {
-    data class Load(val id: Int?) : EditHuacalesUiEvent
-    data class NombresChanged(val value: String) : EditHuacalesUiEvent
-    data class CantidadChanged(val value: String) : EditHuacalesUiEvent
-    data class PrecioChanged(val value: String) : EditHuacalesUiEvent
+import java.util.Date
 
-    data object Save : EditHuacalesUiEvent
-    data object Delete : EditHuacalesUiEvent
+sealed class EditHuacalesUiEvent {
+    data class Load(val id: Int) : EditHuacalesUiEvent()
+    data class FechaChanged(val fecha: Date) : EditHuacalesUiEvent()
+    data class NombreChanged(val nombre: String) : EditHuacalesUiEvent()
+    data class CantidadChanged(val cantidad: String) : EditHuacalesUiEvent()
+    data class PrecioChanged(val precio: String) : EditHuacalesUiEvent()
+    object Save : EditHuacalesUiEvent()
+    object Delete : EditHuacalesUiEvent()
 }
