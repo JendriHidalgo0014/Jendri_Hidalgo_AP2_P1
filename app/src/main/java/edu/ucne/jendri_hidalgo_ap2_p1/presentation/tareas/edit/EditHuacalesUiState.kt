@@ -1,19 +1,19 @@
 package edu.ucne.jendri_hidalgo_ap2_p1.presentation.tareas.edit
 
-class EditHuacalesUiState (
-    val entradaId: Int? = null,
-    val fecha: String = "",
+import java.util.Date
+
+data class EditHuacalesUiState(
+    val entradaId: Int = 0,
+    val fecha: Date? = null,
     val nombrecliente: String = "",
     val cantidad: String = "",
     val precio: String = "",
-    val nombreclienteError: String? = null,
     val fechaError: String? = null,
+    val nombreclienteError: String? = null,
     val cantidadError: String? = null,
     val precioError: String? = null,
     val isSaving: Boolean = false,
-    val isDeleting: Boolean = false,
-    val isNew: Boolean = true,
     val saved: Boolean = false,
-    val deleted: Boolean=false,
-    val saveError: String? = null
+    val isNew: Boolean = true,
+    val isDeleting: Boolean = false
 )
