@@ -33,6 +33,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -57,9 +58,6 @@ dependencies {
 
 
     implementation("com.google.accompanist:accompanist-permissions:0.30.1")
-
-
-
 
     implementation("androidx.compose.foundation:foundation:1.5.0")
 
