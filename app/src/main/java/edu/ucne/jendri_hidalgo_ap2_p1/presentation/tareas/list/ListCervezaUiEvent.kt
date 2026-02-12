@@ -1,5 +1,6 @@
 package edu.ucne.jendri_hidalgo_ap2_p1.presentation.tareas.list
 
+
 sealed interface ListCervezaUiEvent {
     data object Load : ListCervezaUiEvent
     data class Delete(val id: Int) : ListCervezaUiEvent

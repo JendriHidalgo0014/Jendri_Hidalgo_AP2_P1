@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import edu.ucne.jendri_hidalgo_ap2_p1.domain.model.Cervezas
-
 @Composable
 fun ListCervezaScreen(
     viewModel: ListCervezaViewModel = hiltViewModel(),

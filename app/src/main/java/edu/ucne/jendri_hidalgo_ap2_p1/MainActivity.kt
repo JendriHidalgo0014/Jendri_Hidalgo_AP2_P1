@@ -9,7 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import edu.ucne.jendri_hidalgo_ap2_p1.presentation.navigation.NavHost
 import edu.ucne.jendri_hidalgo_ap2_p1.ui.theme.Jendri_Hidalgo_AP2_P1Theme
 
-
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
