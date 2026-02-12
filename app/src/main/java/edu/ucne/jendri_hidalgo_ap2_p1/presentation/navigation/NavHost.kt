@@ -29,6 +29,18 @@ fun NavHost(
             )
         }
 
+        composable<Screen.CervezaEdit> {
+            val args = it.toRoute<Screen.CervezaEdit>()
+            EditCervezaScreen(
+                cervezaId = if (args.cervezaId == 0) null else args.cervezaId,
+                onDrawer = { },
+                goBack = {
+                    navHostController.navigateUp()
+                }
+            )
+        }
+
     }
+
 }
 

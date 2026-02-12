@@ -7,5 +7,5 @@ sealed class Screen {
     data object CervezaList : Screen()
 
     @Serializable
-    data class CervezaEdit(val id: Int? = null) : Screen()
+    data class CervezaEdit(val cervezaId: Int? = null) : Screen()
 }

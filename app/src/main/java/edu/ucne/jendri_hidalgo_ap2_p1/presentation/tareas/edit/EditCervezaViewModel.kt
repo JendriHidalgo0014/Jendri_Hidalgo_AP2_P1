@@ -84,8 +84,8 @@ class EditCervezaViewModel @Inject constructor(
                         isNew = false,
                         cervezaId = cerveza.cervezaId,
                         nombre = cerveza.nombre,
-                        marca = cerveza.marca.toString(),
-                        puntuacion = cerveza.puntuacion.toString(),
+                        marca = cerveza.marca,
+                        puntuacion = cerveza.puntuacion.toString()
                     )
                 }
             }

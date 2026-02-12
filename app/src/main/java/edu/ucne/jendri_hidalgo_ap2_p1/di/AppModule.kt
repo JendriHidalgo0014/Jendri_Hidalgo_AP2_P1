@@ -33,6 +33,11 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideCervezaDao(database: AppDatabase): CervezaDao {
+        return database.cervezaDao()
+    }
+    @Provides
+    @Singleton
     fun provideCervezaRepository(dao: CervezaDao): CervezaRepository {
         return CervezaRepositoryImpl(dao)
     }

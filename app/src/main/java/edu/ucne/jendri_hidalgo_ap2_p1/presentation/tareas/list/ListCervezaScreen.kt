@@ -11,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -35,7 +36,9 @@ fun ListCervezaScreen(
         onDrawer = onDrawer,
         onCreate = onCreate,
         onEdit = onEdit,
-        onDelete = { viewModel.onEvent(ListCervezaUiEvent.Delete(it)) }
+        onDelete = { viewModel.onEvent(ListCervezaUiEvent.Delete(it)) },
+        onFiltroNombreChanged = { viewModel.onEvent(ListCervezaUiEvent.FiltroNombreChanged(it)) },
+        onFiltroMarcaChanged = { viewModel.onEvent(ListCervezaUiEvent.FiltroMarcaChanged(it)) }
     )
 }
 
@@ -46,7 +49,9 @@ private fun ListCervezaBody(
     onDrawer: () -> Unit,
     onCreate: () -> Unit,
     onEdit: (Int) -> Unit,
-    onDelete: (Int) -> Unit
+    onDelete: (Int) -> Unit,
+    onFiltroNombreChanged: (String) -> Unit,
+    onFiltroMarcaChanged: (String) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -72,6 +77,21 @@ private fun ListCervezaBody(
                 .padding(padding)
                 .padding(16.dp)
         ) {
+            OutlinedTextField(
+                value = state.filtroNombre,
+                onValueChange = onFiltroNombreChanged,
+                label = { Text("Filtrar por Nombre") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(Modifier.height(8.dp))
+            OutlinedTextField(
+                value = state.filtroMarca,
+                onValueChange = onFiltroMarcaChanged,
+                label = { Text("Filtrar por Marca") },
+                modifier = Modifier.fillMaxWidth()
+            )
+            Spacer(Modifier.height(16.dp))
+
             if (state.isLoading) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -85,19 +105,43 @@ private fun ListCervezaBody(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No hay cervezas registrados",
+                        text = "No hay cervezas registradas",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             } else {
                 LazyColumn {
-                    items(state.cervezas) { cerveza ->
+                    items(state.cervezasFiltradas) { cerveza ->
                         CervezaCard(
                             cerveza = cerveza,
                             onClick = { onEdit(cerveza.cervezaId) },
                             onDelete = { onDelete(cerveza.cervezaId) }
                         )
+                    }
+
+                    item {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer
+                            )
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(
+                                    "Estadísticas",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Spacer(Modifier.height(8.dp))
+                                Text("Total de cervezas: ${state.totalCervezas}")
+                                Text("Promedio de puntuación: ${"%.2f".format(state.promedioPuntuacion)}")
+                            }
+                        }
                     }
                 }
             }
@@ -124,12 +168,9 @@ private fun CervezaCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = cerveza.nombre,
-                    style = MaterialTheme.typography.titleMedium
-                )
+                Text("Nombre: ${cerveza.nombre}")
                 Text("Marca: ${cerveza.marca}")
-                Text("Puntuacion: $${String.format("%.2f", cerveza.puntuacion)}")
+                Text("Puntuacion: ${String.format("%.2f", cerveza.puntuacion)}")
             }
             TextButton(onClick = { onDelete() }) {
                 Text("Eliminar")
@@ -148,7 +189,9 @@ private fun ListCervezaBodyPreview() {
             onDrawer = {},
             onCreate = {},
             onEdit = {},
-            onDelete = {}
+            onDelete = {},
+            onFiltroNombreChanged = {},
+            onFiltroMarcaChanged = {}
         )
     }
 }

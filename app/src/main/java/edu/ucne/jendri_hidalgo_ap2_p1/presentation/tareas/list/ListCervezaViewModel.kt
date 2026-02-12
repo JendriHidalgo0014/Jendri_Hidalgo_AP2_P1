@@ -32,6 +32,14 @@ class ListCervezaViewModel @Inject constructor(
             ListCervezaUiEvent.CreateNew -> _state.update { it.copy(navigateToCreate = true) }
             is ListCervezaUiEvent.Edit -> _state.update { it.copy(navigateToEditId = event.id) }
             is ListCervezaUiEvent.ShowMessage -> _state.update { it.copy(message = event.message) }
+            is ListCervezaUiEvent.FiltroNombreChanged -> {
+                _state.update { it.copy(filtroNombre = event.nombre) }
+                aplicarFiltros()
+            }
+            is ListCervezaUiEvent.FiltroMarcaChanged -> {
+                _state.update { it.copy(filtroMarca = event.marca) }
+                aplicarFiltros()
+            }
         }
     }
 
@@ -45,7 +53,41 @@ class ListCervezaViewModel @Inject constructor(
                         cervezas = cervezas
                     )
                 }
+                aplicarFiltros()
             }
+        }
+    }
+
+    private fun aplicarFiltros() {
+        val filtradas = state.value.cervezas.filter { cerveza ->
+            val coincideNombre = if (state.value.filtroNombre.isBlank()) {
+                true
+            } else {
+                cerveza.nombre.contains(state.value.filtroNombre, ignoreCase = true)
+            }
+
+            val coincideMarca = if (state.value.filtroMarca.isBlank()) {
+                true
+            } else {
+                cerveza.marca.contains(state.value.filtroMarca, ignoreCase = true)
+            }
+
+            coincideNombre && coincideMarca
+        }
+
+        val total = filtradas.size
+        val promedio = if (filtradas.isNotEmpty()) {
+            filtradas.map { it.puntuacion }.average()
+        } else {
+            0.0
+        }
+
+        _state.update {
+            it.copy(
+                cervezasFiltradas = filtradas,
+                totalCervezas = total,
+                promedioPuntuacion = promedio
+            )
         }
     }
 

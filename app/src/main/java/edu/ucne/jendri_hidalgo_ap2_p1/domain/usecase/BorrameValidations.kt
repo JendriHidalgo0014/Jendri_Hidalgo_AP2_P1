@@ -20,8 +20,8 @@ fun validateMarca(value: String): CervezaValidationResult {
 
 fun validatePuntuacion(value: String): CervezaValidationResult {
     if (value.isBlank()) return CervezaValidationResult(false, Campo)
-    val cantidad = value.toIntOrNull() ?: return CervezaValidationResult(false, "Debe ingresar un número válido")
-    if (cantidad <= 0) return CervezaValidationResult(false, "La puntuacion debe ser mayor a cero")
+    val puntuacion = value.toDoubleOrNull() ?: return CervezaValidationResult(false, "Debe ingresar un número válido")
+    if (puntuacion <= 0) return CervezaValidationResult(false, "La puntuación debe ser mayor a cero")
     return CervezaValidationResult(true)
 }
 
