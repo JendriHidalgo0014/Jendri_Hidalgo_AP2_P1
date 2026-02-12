@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 sealed class Screen {
     @Serializable
-    data object BorrameList : Screen()
+    data object CervezaList : Screen()
 
     @Serializable
-    data class BorrameEdit(val id: Int? = null) : Screen()
+    data class CervezaEdit(val id: Int? = null) : Screen()
 }
